@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,6 @@ namespace EntityFremworkHelper.Models
     }
     public class DataItem:BaseItem
     {
-
         public string Name { get; set; }
         public string Location { get; set; }
         public string Details { get; set; }
@@ -20,7 +20,10 @@ namespace EntityFremworkHelper.Models
         public int Population { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-       
+        public DateTime DateTime { get; set; }
+
+        [NotMapped]
+        public bool IsSelected { get; set; } = false;
     }
 
    

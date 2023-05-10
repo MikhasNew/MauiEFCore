@@ -13,16 +13,11 @@ namespace EntityFremworkHelper.Context
     {
         private static readonly string dbFullPath = Path.Combine(FileSystem.AppDataDirectory, "SQLite001.db3");
 
-        public static List<DataItem> DataItemsList { get; set; }
+        //public static List<DataItem> DataItemsList { get; set; }
 
-        public static async Task LoadDataFromDb()
+        private static async Task LoadDataFromDbAsync()
         {
-            if (DataItemsList == null)
-            {
-                DataItemsList = new();
-                var list = await GetDataItemsAsync();
-                DataItemsList.AddRange(list);
-            }
+           var list = await GetDataItemsAsync().ConfigureAwait(false); 
         }
 
         public static async Task<List<DataItem>> GetDataItemsAsync()
@@ -30,7 +25,10 @@ namespace EntityFremworkHelper.Context
             var list = new List<DataItem>();
             using (var db = new DataItemContext(dbFullPath))
             {
-                list = await db.DataItems.ToListAsync();
+                await Task.Run(async () =>
+                {
+                   list = await db.DataItems.ToListAsync();
+                }).ConfigureAwait(false);
             }
             return list;
         }
@@ -60,7 +58,20 @@ namespace EntityFremworkHelper.Context
                         db.DataItems.Add(dataItem);
                         await db.SaveChangesAsync();
                     }).ConfigureAwait(false);
-                    DataItemsList.Add(dataItem);
+                }
+            }
+        }
+        public static async Task AddDataItems(DataItem[] dataItem)
+        {
+            if (dataItem != null)
+            {
+                using (var db = new DataItemContext(dbFullPath))
+                {
+                    await Task.Run(async () =>
+                    {
+                        db.DataItems.AddRange(dataItem);
+                        await db.SaveChangesAsync();
+                    }).ConfigureAwait(false);
                 }
             }
         }

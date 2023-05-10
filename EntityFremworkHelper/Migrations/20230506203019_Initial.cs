@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -22,7 +23,8 @@ namespace EntityFremworkHelper.Migrations
                     Image = table.Column<string>(type: "TEXT", nullable: true),
                     Population = table.Column<int>(type: "INTEGER", nullable: false),
                     Latitude = table.Column<double>(type: "REAL", nullable: false),
-                    Longitude = table.Column<double>(type: "REAL", nullable: false)
+                    Longitude = table.Column<double>(type: "REAL", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

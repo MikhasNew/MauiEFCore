@@ -1,6 +1,6 @@
 ﻿using EntityFremworkHelper.Context;
 Console.WriteLine("Migrator running..");
-using (var blogContext = new DataItemContext())
+using (var dataItemContext = new DataItemContext())
 {
-    var all = blogContext.DataItems.ToList();
+    var all = dataItemContext.DataItems.ToList();
 }
